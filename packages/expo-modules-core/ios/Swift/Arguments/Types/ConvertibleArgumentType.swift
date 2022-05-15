@@ -6,6 +6,17 @@
 internal struct ConvertibleArgumentType: AnyArgumentType {
   let innerType: ConvertibleArgument.Type
 
+  func wraps<IntrinsicType>(_ type: IntrinsicType.Type) -> Bool {
+    return innerType == IntrinsicType.self
+  }
+
+  func equals(_ type: AnyArgumentType) -> Bool {
+    if let convertibleType = type as? Self {
+      return convertibleType.innerType == innerType
+    }
+    return false
+  }
+
   func cast<ArgType>(_ value: ArgType) throws -> Any {
     return try innerType.convert(from: value)
   }

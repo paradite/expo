@@ -3,7 +3,7 @@
 /**
  A type that can decorate a `JavaScriptObject` with some properties.
  */
-public protocol JavaScriptObjectDecorator {
+internal protocol JavaScriptObjectDecorator {
   /**
    Decorates an existing `JavaScriptObject`.
    */

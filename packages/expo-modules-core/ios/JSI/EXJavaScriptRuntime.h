@@ -14,11 +14,19 @@ namespace react = facebook::react;
 @class EXJavaScriptValue;
 @class EXJavaScriptObject;
 
-typedef void (^JSAsyncFunctionBlock)(NSArray * _Nonnull, RCTPromiseResolveBlock _Nonnull, RCTPromiseRejectBlock _Nonnull);
-typedef id _Nullable (^JSSyncFunctionBlock)(NSArray * _Nonnull);
+typedef void (^JSAsyncFunctionBlock)(EXJavaScriptValue * _Nonnull thisValue,
+                                     NSArray<EXJavaScriptValue *> * _Nonnull arguments,
+                                     RCTPromiseResolveBlock _Nonnull resolve,
+                                     RCTPromiseRejectBlock _Nonnull reject);
+
+typedef id _Nullable (^JSSyncFunctionBlock)(EXJavaScriptValue * _Nonnull thisValue,
+                                            NSArray<EXJavaScriptValue *> * _Nonnull arguments);
 
 #ifdef __cplusplus
-typedef jsi::Value (^JSHostFunctionBlock)(jsi::Runtime &runtime, std::shared_ptr<react::CallInvoker> callInvoker, NSArray<EXJavaScriptValue *> * _Nonnull arguments);
+typedef jsi::Value (^JSHostFunctionBlock)(jsi::Runtime &runtime,
+                                          std::shared_ptr<react::CallInvoker> callInvoker,
+                                          EXJavaScriptValue * _Nonnull thisValue,
+                                          NSArray<EXJavaScriptValue *> * _Nonnull arguments);
 #endif // __cplusplus
 
 NS_SWIFT_NAME(JavaScriptRuntime)
@@ -30,6 +38,7 @@ NS_SWIFT_NAME(JavaScriptRuntime)
 - (nonnull instancetype)init;
 
 #ifdef __cplusplus
+
 - (nonnull instancetype)initWithRuntime:(nonnull jsi::Runtime *)runtime
                             callInvoker:(std::shared_ptr<react::CallInvoker>)callInvoker;
 
@@ -85,6 +94,13 @@ typedef void (^ClassConstructorBlock)(EXJavaScriptObject * _Nonnull thisValue, N
 
 - (nonnull EXJavaScriptObject *)createClass:(nonnull NSString *)name
                                 constructor:(nonnull ClassConstructorBlock)constructor;
+
+#pragma mark - Shared objects
+
+/**
+ Creates a new shared object with given id.
+ */
+- (nonnull EXJavaScriptObject *)createSharedObjectRefWithId:(NSInteger)sharedObjectId;
 
 #pragma mark - Script evaluation
 

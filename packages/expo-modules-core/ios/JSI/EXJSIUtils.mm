@@ -8,6 +8,18 @@
 
 namespace expo {
 
+std::shared_ptr<jsi::Object> createWeakObject(jsi::Runtime &runtime, std::shared_ptr<jsi::Object> object)
+{
+  jsi::Object weakRef = runtime
+    .global()
+    .getProperty(runtime, "WeakRef")
+    .asObject(runtime)
+    .asFunction(runtime)
+    .callAsConstructor(runtime, jsi::Value(runtime, *object))
+    .asObject(runtime);
+  return std::make_shared<jsi::Object>(std::move(weakRef));
+}
+
 void callPromiseSetupWithBlock(jsi::Runtime &runtime, std::shared_ptr<CallInvoker> jsInvoker, std::shared_ptr<Promise> promise, PromiseInvocationBlock setupBlock)
 {
   auto weakResolveWrapper = react::CallbackWrapper::createWeak(promise->resolve_.getFunction(runtime), runtime, jsInvoker);

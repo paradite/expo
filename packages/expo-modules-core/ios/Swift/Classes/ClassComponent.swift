@@ -14,9 +14,19 @@ public final class ClassComponent: ObjectDefinition {
    */
   let constructor: AnySyncFunctionComponent?
 
-  init(name: String, elements: [ClassComponentElement]) {
+  /**
+   An associated shared object class.
+   */
+  let sharedObjectType: AnyArgumentType?
+
+  init<SharedObjectType: SharedObject>(
+    name: String,
+    sharedObjectType: SharedObjectType.Type? = nil,
+    elements: [ClassComponentElement] = []
+  ) {
     self.name = name
     self.constructor = elements.first(where: isConstructor) as? AnySyncFunctionComponent
+    self.sharedObjectType = ArgumentType(SharedObjectType.self)
 
     // Constructors can't be passed down to the object component
     // as we shouldn't override the default `<Class>.prototype.constructor`.
@@ -24,7 +34,7 @@ public final class ClassComponent: ObjectDefinition {
 
     super.init(definitions: elementsWithoutConstructors)
   }
-
+  
   // MARK: - JavaScriptObjectBuilder
 
   public override func build(inRuntime runtime: JavaScriptRuntime) -> JavaScriptObject {

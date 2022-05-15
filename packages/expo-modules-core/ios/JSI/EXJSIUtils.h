@@ -24,6 +24,10 @@ using ClassConstructor = std::function<void(jsi::Runtime &runtime, const jsi::Va
 
 std::shared_ptr<jsi::Function> createClass(jsi::Runtime &runtime, const char *name, ClassConstructor constructor);
 
+#pragma mark - Weak objects
+
+std::shared_ptr<jsi::Object> createWeakObject(jsi::Runtime &runtime, std::shared_ptr<jsi::Object> object);
+
 #pragma mark - Define property
 
 void defineProperty(jsi::Runtime &runtime, const jsi::Object *object, const char *name, jsi::Value value);

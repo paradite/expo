@@ -1,5 +1,6 @@
 // Copyright 2018-present 650 Industries. All rights reserved.
 
+#import <Foundation/Foundation.h>
 #import <ExpoModulesCore/EXJavaScriptValue.h>
 #import <ExpoModulesCore/EXJavaScriptObject.h>
 #import <React/RCTBridgeModule.h>
@@ -100,6 +101,6 @@ typedef void (^ClassConstructorBlock)(EXJavaScriptObject * _Nonnull thisValue, N
 /**
  Evaluates given JavaScript source code.
  */
-- (nonnull EXJavaScriptValue *)evaluateScript:(nonnull NSString *)scriptSource;
+- (nonnull EXJavaScriptValue *)evaluateScript:(nonnull NSString *)scriptSource NS_REFINED_FOR_SWIFT;
 
 @end

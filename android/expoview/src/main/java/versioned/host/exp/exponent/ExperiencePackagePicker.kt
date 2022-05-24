@@ -17,7 +17,7 @@ import expo.modules.clipboard.ClipboardModule
 import expo.modules.constants.ConstantsPackage
 import expo.modules.contacts.ContactsPackage
 import expo.modules.core.interfaces.Package
-import expo.modules.crypto.CryptoPackage
+import expo.modules.crypto.CryptoModule
 import expo.modules.device.DevicePackage
 import expo.modules.documentpicker.DocumentPickerPackage
 import expo.modules.easclient.EASClientModule
@@ -80,7 +80,6 @@ object ExperiencePackagePicker : ModulesProvider {
     CameraPackage(),
     ConstantsPackage(),
     ContactsPackage(),
-    CryptoPackage(),
     DevicePackage(),
     DocumentPickerPackage(),
     ErrorRecoveryPackage(),
@@ -142,6 +141,7 @@ object ExperiencePackagePicker : ModulesProvider {
   override fun getModulesList(): List<Class<out Module>> = listOf(
     CellularModule::class.java,
     ClipboardModule::class.java,
+    CryptoModule::class.java,
     EASClientModule::class.java,
     LinearGradientModule::class.java,
     WebBrowserModule::class.java,
